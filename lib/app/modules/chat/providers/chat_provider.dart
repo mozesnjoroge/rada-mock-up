@@ -1,0 +1,26 @@
+import 'package:get/get.dart';
+import '../model/chat.model.dart';
+
+class ChatProvider extends GetConnect {
+  @override
+  void onInit() {
+    httpClient.baseUrl = 'http://147.182.196.55/';
+  }
+
+//TODO:Add pictures and videos
+  Future<ChatModel> sendChat(ChatModel chat, String userName) async {
+    // final form = FormData({
+    //   'file': MultipartFile(image, filename: 'avatar.png'),
+    //   'otherFile': MultipartFile(image, filename: 'cover.png'),
+    // });
+    final data = {'content': chat.content, 'authorName': userName};
+    var result = await post('http://147.182.196.55/rada/api/v1/chats', data);
+    ChatModel finalResults = ChatModel(
+        content: result.body['chat']['content'], authorName: result.body['chat']['authorName']);
+    return finalResults;
+  }
+
+  GetSocket getSocketConnection() {
+    return socket('http://147.182.196.55/socket.io');
+  }
+}

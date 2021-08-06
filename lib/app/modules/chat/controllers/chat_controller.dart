@@ -1,0 +1,80 @@
+import 'package:get/get.dart';
+import '../model/chat.model.dart';
+import '../providers/chat_provider.dart';
+
+class ChatController extends GetxController {
+  late GetSocket _io;
+  ChatProvider _provider = ChatProvider();
+
+  RxList<ChatModel> currentChats = RxList<ChatModel>();
+  var userName = 'brian'.obs;
+  var typingUser = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _io = _provider.getSocketConnection();
+    connect();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    _io.close();
+  }
+
+  //add new user to the collective
+  void addUser(String userName) {
+    userName = userName;
+    update();
+  }
+
+  void connect() {
+    _io.connect();
+    //notify other users of your status
+    _io.emit(SocketEvents.USER, 'brian');
+    //request for the current available chats
+    _io.emit(SocketEvents.FETCH_CHATS, null);
+    //listen for incomming chats
+    _io.on(SocketEvents.CHATS, (chats) {
+      for (var i = 0; i < chats.length; i++) {
+        final chat = chats[i];
+        currentChats.add(ChatModel(
+            content: chat['content'],
+            authorName: chat['authorName'],
+            id: chat['_id']));
+      }
+      update();
+    });
+    //check for online users and notify the user
+    _io.on(SocketEvents.online, (user) {
+      Get.snackbar('testing', '$user is online');
+      print('$user is online');
+    });
+    //listen for typing events
+    _io.on(SocketEvents.typing, (user) {
+      typingUser = user;
+      update();
+    });
+    //listen for incoming chat
+    _io.on(SocketEvents.CHAT, (chat) {
+      currentChats.add(chat);
+      print(chat);
+      update();
+    });
+  }
+
+  void sendChat(ChatModel chat, String name) async {
+    var result = await _provider.sendChat(chat, name);
+
+    _io.emit(SocketEvents.newChat, {
+      'content': result.content,
+      '_id': result.id,
+      'authorName': result.authorName
+    });
+  }
+}
