@@ -36,7 +36,7 @@ class ChatController extends GetxController {
 
   void connect() {
     _io
-      ..onOpen(() {
+      .onOpen(() {
         print('conected to rada api');
       });
     //notify other users of your status
@@ -46,7 +46,7 @@ class ChatController extends GetxController {
     //listen for incomming chats
     _io.on(SocketEvents.CHATS, (chats) {
       print(chats.toString());
-      for (var i = 0; i < chats.length; i++) {
+      for (var i = 0; i <= chats.length; i++) {
         final chat = chats[i];
         currentChats.add(ChatModel(chat: Chat.fromJson(chat)));
       }

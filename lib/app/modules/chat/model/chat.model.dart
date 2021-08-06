@@ -50,10 +50,10 @@ class Chat {
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
+        
         "authorName": authorName,
         "content": content,
-        "media": media,
+       
       };
 }
 
