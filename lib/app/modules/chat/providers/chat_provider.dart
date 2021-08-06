@@ -4,7 +4,7 @@ import '../model/chat.model.dart';
 class ChatProvider extends GetConnect {
   @override
   void onInit() {
-    httpClient.baseUrl = 'http://147.182.196.55/';
+    httpClient.baseUrl = 'http://147.182.196.55:8000/';
   }
 
 // ignore: todo
@@ -16,21 +16,18 @@ class ChatProvider extends GetConnect {
     //   'otherFile': MultipartFile(image, filename: 'cover.png'),
     // });
 
-    var result =
-        await post('http://147.182.196.55/rada/api/v1/chats', {
-        
-        "authorName": chat.chat.authorName,
-        "content": chat.chat.content,
-       
-      });
+    var result = await post('http://147.182.196.55:8000/rada/api/v1/chats', {
+      "authorName": chat.chat.authorName,
+      "content": chat.chat.content,
+    });
     ChatModel finalResults = ChatModel(
-                      chat: Chat(
-                          content: result.body['chat']['content'],
-                          authorName: result.body['chat']['authorName']));
+        chat: Chat(
+            content: result.body['chat']['content'],
+            authorName: result.body['chat']['authorName']));
     return finalResults;
   }
 
   GetSocket getSocketConnection() {
-    return socket('http://147.182.196.55/socket');
+    return socket('http://147.182.196.55:8000/socket');
   }
 }

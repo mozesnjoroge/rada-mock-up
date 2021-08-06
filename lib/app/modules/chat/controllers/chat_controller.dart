@@ -16,7 +16,10 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _io =  IO.io('http://147.182.196.55');
+    _io = IO.io('http://147.182.196.55:8000', <String, dynamic>{
+      "transports": ["websocket"],
+      "autoConnect": false,
+    });
     connect();
   }
 
@@ -37,9 +40,10 @@ class ChatController extends GetxController {
   }
 
   void connect() {
+    _io.connect();
     _io.onConnect((_) {
-    print('connect');
-  });
+      print('connect');
+    });
     //notify other users of your status
     _io.emit(SocketEvents.USER, userName.value);
     //request for the current available chats
