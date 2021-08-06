@@ -7,9 +7,10 @@ class ChatController extends GetxController {
   ChatProvider _provider = ChatProvider();
 
   RxList<ChatModel> currentChats = RxList<ChatModel>();
-  var userName = 'brian'.obs;
+  var userName = ''.obs;
   var typingUser = ''.obs;
-
+  var loadingChats = true.obs;
+  
   @override
   void onInit() {
     super.onInit();
@@ -28,19 +29,23 @@ class ChatController extends GetxController {
   }
 
   //add new user to the collective
-  void addUser(String userName) {
-    userName = userName;
+  void addUser(String name) {
+    userName.value = name;
     update();
   }
 
   void connect() {
-    _io.connect();
+    _io
+      ..onOpen(() {
+        print('conected to rada api');
+      });
     //notify other users of your status
-    _io.emit(SocketEvents.USER, 'brian');
+    _io.emit(SocketEvents.USER, userName.value);
     //request for the current available chats
     _io.emit(SocketEvents.FETCH_CHATS, null);
     //listen for incomming chats
     _io.on(SocketEvents.CHATS, (chats) {
+      print(chats.toString());
       for (var i = 0; i < chats.length; i++) {
         final chat = chats[i];
         currentChats.add(ChatModel(
@@ -48,6 +53,7 @@ class ChatController extends GetxController {
             authorName: chat['authorName'],
             id: chat['_id']));
       }
+      loadingChats.toggle();
       update();
     });
     //check for online users and notify the user
@@ -57,7 +63,7 @@ class ChatController extends GetxController {
     });
     //listen for typing events
     _io.on(SocketEvents.typing, (user) {
-      typingUser = user;
+      typingUser.value = user;
       update();
     });
     //listen for incoming chat
@@ -68,8 +74,8 @@ class ChatController extends GetxController {
     });
   }
 
-  void sendChat(ChatModel chat, String name) async {
-    var result = await _provider.sendChat(chat, name);
+  void sendChat(ChatModel chat) async {
+    var result = await _provider.sendChat(chat, userName.value);
 
     _io.emit(SocketEvents.newChat, {
       'content': result.content,

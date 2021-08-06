@@ -1,11 +1,21 @@
+import 'dart:io';
+
 class ChatModel {
   final String? id;
   final String content;
   final String authorName;
   final String? media;
+  //formdata
+  final File? picture;
+  final File? video;
 
   ChatModel(
-      {required this.content, required this.authorName, this.id, this.media});
+      {required this.content,
+      required this.authorName,
+      this.id,
+      this.media,
+      this.picture,
+      this.video});
 }
 
 class SocketEvents {

@@ -9,6 +9,7 @@ class ChatProvider extends GetConnect {
 
 //TODO:Add pictures and videos
   Future<ChatModel> sendChat(ChatModel chat, String userName) async {
+    // if(chat.picture.)
     // final form = FormData({
     //   'file': MultipartFile(image, filename: 'avatar.png'),
     //   'otherFile': MultipartFile(image, filename: 'cover.png'),
@@ -21,6 +22,6 @@ class ChatProvider extends GetConnect {
   }
 
   GetSocket getSocketConnection() {
-    return socket('http://147.182.196.55/socket.io');
+    return socket('http://147.182.196.55/socket');
   }
 }
