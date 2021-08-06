@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
 import '../model/chat.model.dart';
 import '../providers/chat_provider.dart';
 
 class ChatController extends GetxController {
-  late GetSocket _io;
+  late IO.Socket _io;
   ChatProvider _provider = ChatProvider();
 
   RxList<ChatModel> currentChats = RxList<ChatModel>();
@@ -14,7 +16,7 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _io = _provider.getSocketConnection();
+    _io =  IO.io('http://147.182.196.55');
     connect();
   }
 
@@ -35,10 +37,9 @@ class ChatController extends GetxController {
   }
 
   void connect() {
-    _io
-      .onOpen(() {
-        print('conected to rada api');
-      });
+    _io.onConnect((_) {
+    print('connect');
+  });
     //notify other users of your status
     _io.emit(SocketEvents.USER, userName.value);
     //request for the current available chats

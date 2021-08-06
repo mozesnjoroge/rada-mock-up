@@ -17,8 +17,16 @@ class ChatProvider extends GetConnect {
     // });
 
     var result =
-        await post('http://147.182.196.55/rada/api/v1/chats', chat.toJson());
-    ChatModel finalResults = chatModelFromJson(result.body);
+        await post('http://147.182.196.55/rada/api/v1/chats', {
+        
+        "authorName": chat.chat.authorName,
+        "content": chat.chat.content,
+       
+      });
+    ChatModel finalResults = ChatModel(
+                      chat: Chat(
+                          content: result.body['chat']['content'],
+                          authorName: result.body['chat']['authorName']));
     return finalResults;
   }
 
