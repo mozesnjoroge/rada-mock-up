@@ -24,7 +24,10 @@ class RadaChats extends GetView<ChatController> {
                 onPressed: () {
                   //dummy content
                   var chat = ChatModel(
-                      content: 'testing from flutter', authorName: 'brian');
+                      chat: Chat(
+                          content: 'testing from flutter',
+                          authorName: 'brian'));
+
                   handlePress(chat);
                 },
                 child: Text('test'))),

@@ -10,7 +10,7 @@ class ChatController extends GetxController {
   var userName = ''.obs;
   var typingUser = ''.obs;
   var loadingChats = true.obs;
-  
+
   @override
   void onInit() {
     super.onInit();
@@ -48,10 +48,7 @@ class ChatController extends GetxController {
       print(chats.toString());
       for (var i = 0; i < chats.length; i++) {
         final chat = chats[i];
-        currentChats.add(ChatModel(
-            content: chat['content'],
-            authorName: chat['authorName'],
-            id: chat['_id']));
+        currentChats.add(ChatModel(chat: Chat.fromJson(chat)));
       }
       loadingChats.toggle();
       update();
@@ -76,11 +73,6 @@ class ChatController extends GetxController {
 
   void sendChat(ChatModel chat) async {
     var result = await _provider.sendChat(chat, userName.value);
-
-    _io.emit(SocketEvents.newChat, {
-      'content': result.content,
-      '_id': result.id,
-      'authorName': result.authorName
-    });
+    _io.emit(SocketEvents.newChat, result.toJson());
   }
 }

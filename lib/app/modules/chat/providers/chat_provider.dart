@@ -7,6 +7,7 @@ class ChatProvider extends GetConnect {
     httpClient.baseUrl = 'http://147.182.196.55/';
   }
 
+// ignore: todo
 //TODO:Add pictures and videos
   Future<ChatModel> sendChat(ChatModel chat, String userName) async {
     // if(chat.picture.)
@@ -14,10 +15,10 @@ class ChatProvider extends GetConnect {
     //   'file': MultipartFile(image, filename: 'avatar.png'),
     //   'otherFile': MultipartFile(image, filename: 'cover.png'),
     // });
-    final data = {'content': chat.content, 'authorName': userName};
-    var result = await post('http://147.182.196.55/rada/api/v1/chats', data);
-    ChatModel finalResults = ChatModel(
-        content: result.body['chat']['content'], authorName: result.body['chat']['authorName']);
+
+    var result =
+        await post('http://147.182.196.55/rada/api/v1/chats', chat.toJson());
+    ChatModel finalResults = chatModelFromJson(result.body);
     return finalResults;
   }
 

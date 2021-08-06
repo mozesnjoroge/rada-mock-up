@@ -1,21 +1,60 @@
+// To parse this JSON data, do
+//
+//     final chatModel = chatModelFromJson(jsonString);
+
+import 'dart:convert';
+
 import 'dart:io';
 
-class ChatModel {
-  final String? id;
-  final String content;
-  final String authorName;
-  final String? media;
-  //formdata
-  final File? picture;
-  final File? video;
+ChatModel chatModelFromJson(String str) => ChatModel.fromJson(json.decode(str));
 
-  ChatModel(
-      {required this.content,
-      required this.authorName,
+String chatModelToJson(ChatModel data) => json.encode(data.toJson());
+
+class ChatModel {
+  ChatModel({
+    required this.chat,
+  });
+
+  Chat chat;
+
+  factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
+        chat: Chat.fromJson(json["chat"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "chat": chat.toJson(),
+      };
+}
+
+class Chat {
+  Chat(
+      {required this.authorName,
+      required this.content,
       this.id,
       this.media,
       this.picture,
       this.video});
+
+  String? id;
+  String authorName;
+  String content;
+  String? media;
+  //formdata
+  final File? picture;
+  final File? video;
+  factory Chat.fromJson(Map<String, dynamic> json) => Chat(
+        id: json["_id"],
+        authorName: json["authorName"],
+        content: json["content"],
+        media: json["media"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "authorName": authorName,
+        "content": content,
+        "media": media,
+      };
 }
 
 class SocketEvents {
