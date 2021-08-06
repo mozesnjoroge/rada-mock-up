@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../model/chat.model.dart';
 import '../controllers/chat_controller.dart';
 
-class ChatView extends GetView<ChatController> {
+class RadaChats extends GetView<ChatController> {
   final ChatController chatController = Get.put(ChatController());
   void handlePress(ChatModel chat) {
     // change to actual data
