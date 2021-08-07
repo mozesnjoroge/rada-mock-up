@@ -23,25 +23,24 @@ class RadaChats extends GetView<ChatController> {
           child: Container(
         child: Stack(
           children: [
-            Obx(() {
-              return Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(top: 10.0),
-                  color: Palette.backgroundColor,
-                  child: ListView.builder(
-                    itemCount: chatContent.length,
-                    itemBuilder: (BuildContext ctx, index) => buildItem(
-                      chatController.userName.value,
-                      chatController.currentChats[index],
-                    ),
-                  ),
+            Obx((){
+                return Container(
+              padding: EdgeInsets.only(top: 10.0),
+              color: Palette.backgroundColor,
+              child: ListView.builder(
+                itemCount: chatController.currentChats.length,
+                itemBuilder: (BuildContext ctx, index) => buildItem(
+                  chatController.userName.value,
+                  chatController.currentChats[index],
                 ),
-              );
+              ),
+            );
             }),
-            Positioned(
-                bottom: MediaQuery.of(context).size.height,
-                left: 0,
-                child: buildInput())
+            
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: buildInput(),
+            )
           ],
         ),
       )),
