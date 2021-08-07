@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../model/chat.model.dart';
@@ -7,6 +10,8 @@ import '../providers/chat_provider.dart';
 class ChatController extends GetxController {
   late IO.Socket _io;
   ChatProvider _provider = ChatProvider();
+  var imagePicker = ImagePicker();
+  File? image;
 
   RxList<ChatModel> currentChats = RxList<ChatModel>();
   var userName = ''.obs;
@@ -77,7 +82,20 @@ class ChatController extends GetxController {
   }
 
   void sendChat(ChatModel chat) async {
+    
+    if (image != null){
+    } chat.chat.picture = image;
+      
     var result = await _provider.sendChat(chat, userName.value);
     _io.emit(SocketEvents.newChat, result.toJson());
+  }
+
+  Future getImage() async {
+    XFile? pickedFile;
+    pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      image = File(pickedFile.path); //convert xFile to File
+
+    }
   }
 }

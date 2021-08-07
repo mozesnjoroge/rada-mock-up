@@ -40,8 +40,8 @@ class Chat {
   String content;
   String? media;
   //formdata
-  final File? picture;
-  final File? video;
+   File? picture;
+   File? video;
   factory Chat.fromJson(Map<String, dynamic> json) => Chat(
         id: json["_id"],
         authorName: json["authorName"],
