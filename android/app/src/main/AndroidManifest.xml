@@ -2,7 +2,7 @@
     package="com.devteam.rad_mock_up">
    <application
         android:label="rada_mock_up"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

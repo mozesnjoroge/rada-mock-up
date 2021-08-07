@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
           Flexible(
             child: Container(
               child: TextField(
+                autofocus: true,
                 onSubmitted: (value) {
                   
                 },
@@ -63,6 +64,6 @@ import 'package:flutter/material.dart';
       ),
       width: double.infinity,
       height: 50.0,
-      decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.black87, width: 0.5)), color: Colors.white),
+        decoration: BoxDecoration( color: Colors.white),
     );
   }
