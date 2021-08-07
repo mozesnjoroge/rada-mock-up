@@ -25,23 +25,21 @@ class RadaChats extends GetView<ChatController> {
           child: Container(
         child: Stack(
           children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.only(top: 10.0),
-                color: Palette.backgroundColor,
-                child: ListView.builder(
-                  itemCount: chatContent.length,
-                  itemBuilder: (BuildContext ctx, index) => buildItem(
-                    'brian',
-                    getChats()[index],
-                  ),
+            Container(
+              padding: EdgeInsets.only(top: 10.0),
+              color: Palette.backgroundColor,
+              child: ListView.builder(
+                itemCount: chatContent.length,
+                itemBuilder: (BuildContext ctx, index) => buildItem(
+                  'mozes',
+                  getChats()[index],
                 ),
               ),
             ),
-            Positioned(
-                bottom: MediaQuery.of(context).size.height,
-                left: 0,
-                child: buildInput())
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: buildInput(),
+            )
           ],
         ),
       )),
@@ -62,7 +60,6 @@ class RadaChats extends GetView<ChatController> {
     return chatWidgets;
   }
 }
-
 
 List<Map<String, dynamic>> chatContent = [
   {
