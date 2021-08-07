@@ -10,8 +10,6 @@ import '../controllers/chat_controller.dart';
 class RadaChats extends GetView<ChatController> {
   final ChatController chatController = Get.put(ChatController());
   void handlePress(ChatModel chat) {
-    // change to actual data
-    chatController.addUser('brian');
     chatController.sendChat(chat);
   }
 
@@ -25,19 +23,21 @@ class RadaChats extends GetView<ChatController> {
           child: Container(
         child: Stack(
           children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.only(top: 10.0),
-                color: Palette.backgroundColor,
-                child: ListView.builder(
-                  itemCount: chatContent.length,
-                  itemBuilder: (BuildContext ctx, index) => buildItem(
-                    'brian',
-                    getChats()[index],
+            Obx(() {
+              return Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(top: 10.0),
+                  color: Palette.backgroundColor,
+                  child: ListView.builder(
+                    itemCount: chatContent.length,
+                    itemBuilder: (BuildContext ctx, index) => buildItem(
+                      chatController.userName.value,
+                      chatController.currentChats[index],
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
             Positioned(
                 bottom: MediaQuery.of(context).size.height,
                 left: 0,
@@ -62,7 +62,6 @@ class RadaChats extends GetView<ChatController> {
     return chatWidgets;
   }
 }
-
 
 List<Map<String, dynamic>> chatContent = [
   {
