@@ -1,7 +1,7 @@
 name: rad_mock_up
 version: 1.0.0+1
 publish_to: none
-description: A mocl up for rada egerton chapter
+description: A mock up for rada egerton chapter
 environment: 
   sdk: '>=2.12.0 <3.0.0'
 
@@ -16,7 +16,7 @@ dependencies:
 dev_dependencies: 
   flutter_test: 
     sdk: flutter
-
 flutter: 
   uses-material-design: true
-
+  assets:
+    - assets/chat.png
