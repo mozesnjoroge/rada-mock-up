@@ -23,59 +23,64 @@ class SigningView extends GetView<SigningController> {
         centerTitle: true,
       ),
       body: Center(
-          child: Form(
+          child: Column(
+            children: [
+              Image.asset("assets/bubble.png",width: 300,),
+              Form(
         key: formKey,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: 'Username',
-                  ),
-                  controller: controller.textController,
-                  validator: validator,
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: TextButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      controller.addUser();
-                      Get.offNamed('/chat');
-                    }
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(color: Colors.white),
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        hintText: 'Username',
+                      ),
+                      controller: controller.textController,
+                      validator: validator,
                     ),
                   ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Theme.of(context).accentColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: TextButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          controller.addUser();
+                          Get.offNamed('/chat');
+                        }
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Theme.of(context).accentColor),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
         ),
-      )),
+      ),
+            ],
+          )),
     );
   }
 }
