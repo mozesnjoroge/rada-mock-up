@@ -9,7 +9,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
         body: SafeArea(
       child: Column(
-        mainAxisAlignment : MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
             width: double.infinity,
@@ -20,9 +20,11 @@ class HomeView extends GetView<HomeController> {
           ),
           Text('Content to be uploaded'),
           Container(
-          width: MediaQuery.of(context).size.width*0.8,
+            width: MediaQuery.of(context).size.width * 0.8,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.offNamed('/signing');
+              },
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
