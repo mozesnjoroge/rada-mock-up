@@ -23,20 +23,17 @@ class RadaChats extends GetView<ChatController> {
           child: Container(
         child: Stack(
           children: [
-            Obx((){
-                return Container(
+            Container(
               padding: EdgeInsets.only(top: 10.0),
               color: Palette.backgroundColor,
               child: ListView.builder(
-                itemCount: chatController.currentChats.length,
+                itemCount: getChats().length,
                 itemBuilder: (BuildContext ctx, index) => buildItem(
                   chatController.userName.value,
-                  chatController.currentChats[index],
+                  getChats()[index],
                 ),
               ),
-            );
-            }),
-            
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: buildInput(),
@@ -47,16 +44,16 @@ class RadaChats extends GetView<ChatController> {
     );
   }
 
-  List<Chat> getChats() {
-    List<Chat> chatWidgets = [];
+  List<ChatModel> getChats() {
+    List<ChatModel> chatWidgets = [];
     for (int i = 0; i < chatContent.length; i++) {
-      chatWidgets.add(
-        Chat(
+      chatWidgets.add(ChatModel(
+        chat: Chat(
           authorName: chatContent[i]['authorName'],
           content: chatContent[i]['content'],
           media: chatContent[i]['media'],
         ),
-      );
+      ));
     }
     return chatWidgets;
   }
