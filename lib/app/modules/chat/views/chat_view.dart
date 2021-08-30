@@ -31,6 +31,7 @@ class RadaChats extends GetView<ChatController> {
                 itemBuilder: (BuildContext ctx, index) => buildItem(
                   chatController.userName.value,
                   getChats()[index],
+                  
                 ),
               ),
             ),
